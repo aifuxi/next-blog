@@ -1,0 +1,5 @@
+export const HTTP_STATUS_CODE = {
+  UNAUTHORIZED: 401,
+  SUCCESS: 200,
+  BAD_REQUEST: 400,
+};
