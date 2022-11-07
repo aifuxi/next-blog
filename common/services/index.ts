@@ -5,3 +5,5 @@ export * from './postTag';
 export * from './postCategory';
 
 export * from './statistics';
+
+export * from './about';
