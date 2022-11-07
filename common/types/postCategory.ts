@@ -1,4 +1,5 @@
 import type { PaginationReq } from './base';
+import { Post } from './post';
 import type { SortByEnum, SortOrderEnum } from './sort-enum';
 
 export interface CreatePostCategoryReq {
@@ -18,6 +19,14 @@ export interface PostCategory {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export type PostCategoryWithPostCount = PostCategory & {
+  posts: number;
+};
+
+export type PostCategoryWithPost = PostCategory & {
+  posts: Post[];
+};
 
 export interface FindManyPostCategoryReq extends PaginationReq {
   id?: string;

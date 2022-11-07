@@ -1,4 +1,5 @@
 import type { PaginationReq } from './base';
+import { Post } from './post';
 import type { SortByEnum, SortOrderEnum } from './sort-enum';
 
 export interface CreatePostTagReq {
@@ -18,6 +19,14 @@ export interface PostTag {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export type PostTagWithPostCount = PostTag & {
+  posts: number;
+};
+
+export type PostTagWithPost = PostTag & {
+  posts: Post[];
+};
 
 export interface FindManyPostTagReq extends PaginationReq {
   id?: string;

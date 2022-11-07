@@ -1,0 +1,12 @@
+html,
+body {
+  /* 优先使用 等线(dengxian) 这个字体，感觉看着不错 */
+  font-family: 'dengxian', ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+  font-feature-settings: normal;
+  /* 这个属性可以使页面上的字体抗锯齿, 让文字看起来更清晰 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

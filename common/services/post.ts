@@ -15,3 +15,7 @@ export function findManyPosts(
   const query = qs.stringify(data);
   return request.get(`${POSTS}?${query}`);
 }
+
+export function postViewIncrement(id: string) {
+  return request.patch(`${POSTS}/view_increment/${id}`);
+}

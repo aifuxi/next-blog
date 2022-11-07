@@ -1,4 +1,4 @@
-import { formatSlashTime } from '@/utils/time';
+import { formatTime } from '@/utils/time';
 import { ParsedUrlQuery } from 'querystring';
 import {
   FaCalendarAlt,
@@ -14,14 +14,11 @@ import {
   InferGetServerSidePropsType,
 } from 'next';
 import Link from 'next/link';
+import { formatNumber } from '@/utils/number';
 
 type Props = {
   data: Awaited<ReturnType<typeof findManyPosts>>;
 };
-
-interface Params extends ParsedUrlQuery {
-  id: string;
-}
 
 export const getServerSideProps: GetServerSideProps<Props, any> = async () => {
   const data = await findManyPosts({ limit: 1000, offset: 0 });
@@ -54,7 +51,7 @@ const Index: NextPage<
             {/* 发布时间/更新时间 */}
             <div className="flex items-center justify-center space-x-1 text-zinc-400">
               <FaCalendarAlt />
-              <span>{formatSlashTime(post.createdAt)}</span>
+              <span>{formatTime(post.createdAt)}</span>
             </div>
 
             {/* 分类 */}
@@ -100,7 +97,7 @@ const Index: NextPage<
               <span className="inline-block w-[1px] h-3 mx-4 bg-zinc-400"></span>
               <FaEye className="mr-2 text-zinc-400" />
               <span className="mr-2 underline transition-colors duration-300 underline-offset-4 hover:text-zinc-900">
-                {post.view}
+                {formatNumber(post.view)}
               </span>
             </div>
           </div>

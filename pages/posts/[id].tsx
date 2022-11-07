@@ -1,6 +1,8 @@
-import { getPost } from '@/common/services';
+import { VIEW_INCREMENT_MILLISECOND } from '@/common/constants/numbers';
+import { getPost, postViewIncrement } from '@/common/services';
 import MarkdownEditor from '@/components/MarkdownEditor';
-import { formatSlashTime } from '@/utils/time';
+import { formatNumber } from '@/utils/number';
+import { formatTime } from '@/utils/time';
 import {
   GetServerSideProps,
   InferGetServerSidePropsType,
@@ -8,7 +10,7 @@ import {
 } from 'next';
 import Link from 'next/link';
 import { ParsedUrlQuery } from 'querystring';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { FaCalendarAlt, FaFolderOpen, FaTags, FaEye } from 'react-icons/fa';
 
@@ -34,14 +36,25 @@ const PostDetail: NextPage<
 > = ({ data }) => {
   const post = data.data;
 
+  useEffect(() => {
+    // 在文章详情呆够 VIEW_INCREMENT_MILLISECOND 向后端发送阅读量+1请求
+    const timeId = window.setTimeout(async () => {
+      await postViewIncrement(post.id);
+    }, VIEW_INCREMENT_MILLISECOND);
+
+    return () => {
+      window.clearTimeout(timeId);
+    };
+  }, [post]);
+
   return (
     <div>
-      <h1 className=" text-xl font-semibold pb-6">{post.title}</h1>
+      <h1 className="pb-6 text-xl font-semibold ">{post.title}</h1>
       <div className="flex flex-row items-center h-4 text-sm text-zinc-400">
         {/* 发布时间/更新时间 */}
         <div className="flex items-center justify-center space-x-1 text-zinc-400">
           <FaCalendarAlt />
-          <span>{formatSlashTime(post.createdAt)}</span>
+          <span>{formatTime(post.createdAt)}</span>
         </div>
 
         {/* 分类 */}
@@ -87,7 +100,7 @@ const PostDetail: NextPage<
           <span className="inline-block w-[1px] h-3 mx-4 bg-zinc-400"></span>
           <FaEye className="mr-2 text-zinc-400" />
           <span className="mr-2 underline transition-colors duration-300 underline-offset-4 hover:text-zinc-900">
-            {post.view}
+            {formatNumber(post.view)}
           </span>
         </div>
       </div>

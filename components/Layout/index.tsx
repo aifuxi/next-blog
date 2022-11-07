@@ -1,12 +1,12 @@
 import {
   ABOUT_URL,
+  ARCHIVES_URL,
   CATEGORY_URL,
   HOME_URL,
-  POST_URL,
   TAG_URL,
 } from '@/common/constants/path';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FaHome,
   FaEnvelope,
@@ -20,6 +20,13 @@ import {
 } from 'react-icons/fa';
 import cs from 'classnames';
 import { useRouter } from 'next/router';
+import { BLOG_AUTHOR, BLOG_TITLE } from '@/common/constants/blog';
+import getConfig from 'next/config';
+import request from '@/utils/request';
+import { getStatisticsCount, STATISTICS } from '@/common/services';
+import { StatisticsCount } from '@/common/types';
+
+const { publicRuntimeConfig } = getConfig();
 
 type NavItem = {
   link: string;
@@ -43,7 +50,7 @@ const navItems: NavItem[] = [
     icon: <FaTags className="mr-2 text-zinc-700" />,
   },
   {
-    link: POST_URL,
+    link: ARCHIVES_URL,
     text: '归档',
     icon: <FaArchive className="mr-2 text-zinc-700" />,
   },
@@ -57,6 +64,20 @@ const navItems: NavItem[] = [
 const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const router = useRouter();
   const { pathname } = router;
+  const [countData, setCountData] = useState<StatisticsCount>({
+    postCategoryCount: 0,
+    postCount: 0,
+    postTagCount: 0,
+  });
+
+  useEffect(() => {
+    const fetchCountData = async () => {
+      const { data } = await getStatisticsCount();
+      setCountData(data);
+    };
+
+    fetchCountData();
+  }, []);
 
   return (
     <div className="w-full h-full min-h-screen bg-gray-50">
@@ -68,9 +89,9 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
         {/* 侧边栏 */}
         <aside className="w-[260px]  flex flex-col ">
           <div className="w-full mb-6 bg-white shadow-lg">
-            <Link href="/">
+            <Link href={HOME_URL}>
               <h2 className="py-6 text-xl font-medium text-center text-white bg-zinc-700">
-                F西的博客😘
+                {BLOG_TITLE}
               </h2>
             </Link>
 
@@ -106,22 +127,30 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                 className="block w-[108px] h-[108px]  rounded-full absolute left-1/2 top-1/2 -translate-x-1/2  -translate-y-1/2 border border-zinc-100 object-cover"
               />
             </div>
-            <h2 className="py-4 text-2xl font-medium text-center">F西</h2>
+            <h2 className="py-4 text-2xl font-medium text-center">
+              {BLOG_AUTHOR}
+            </h2>
             <p className="mb-6 text-[13px] text-center">
               永远相信，美好的事情众将发生
             </p>
-
+            {/* TODO: 这个数字可以做一个滚动的效果，counterdown */}
             <ul className="flex flex-row justify-center pb-4 border-b border-dashed">
               <li className="flex flex-col items-center justify-center px-4">
-                <span className="text-base font-bold text-zinc-900">20</span>
+                <span className="text-base font-bold text-zinc-900">
+                  {countData.postCount}
+                </span>
                 <span className="text-[13px]">日志</span>
               </li>
               <li className="flex flex-col items-center justify-center px-4 border-l border-r">
-                <span className="text-base font-bold text-zinc-900">20</span>
+                <span className="text-base font-bold text-zinc-900">
+                  {countData.postCategoryCount}
+                </span>
                 <span className="text-[13px]">分类</span>
               </li>
               <li className="flex flex-col items-center justify-center px-4">
-                <span className="text-base font-bold text-zinc-900">20</span>
+                <span className="text-base font-bold text-zinc-900">
+                  {countData.postTagCount}
+                </span>
                 <span className="text-[13px]">标签</span>
               </li>
             </ul>
