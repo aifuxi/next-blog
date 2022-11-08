@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .transition-all-in-one {
+    @apply transition-all duration-300 ease-linear;
+  }
+
+  .after-transition-all-in-one {
+    @apply after:transition-all after:duration-300 after:ease-linear;
+  }
+
+  .before-transition-all-in-one {
+    @apply before:transition-all before:duration-300 before:ease-linear;
+  }
+}
+
+.text-primary {
+  @apply text-zinc-500;
+}
+
+.text-secondary {
+  @apply text-zinc-400;
+}
+.text-quaternary {
+  @apply text-zinc-500;
+}
+
+.text-size-small {
+  @apply text-[13px];
+}

@@ -49,10 +49,10 @@ const PostDetail: NextPage<
 
   return (
     <div>
-      <h1 className="pb-6 text-xl font-semibold ">{post.title}</h1>
-      <div className="flex flex-row items-center h-4 text-sm text-zinc-400">
+      <h1 className="pb-6 text-xl font-semibold text-zinc-800">{post.title}</h1>
+      <div className="flex flex-row items-center h-4 text-sm ">
         {/* 发布时间/更新时间 */}
-        <div className="flex items-center justify-center space-x-1 text-zinc-400">
+        <div className="flex items-center justify-center space-x-1 ">
           <FaCalendarAlt />
           <span>{formatTime(post.createdAt)}</span>
         </div>
@@ -62,14 +62,14 @@ const PostDetail: NextPage<
           {post.categories?.length ? (
             <>
               <span className="inline-block w-[1px] h-3 mx-4 bg-zinc-400"></span>
-              <FaFolderOpen className="mr-2 text-zinc-400" />
+              <FaFolderOpen className="mr-2 " />
             </>
           ) : null}
           {post.categories?.map((v) => (
             <Link
               href={`/categories/${post.id}`}
               key={v.id}
-              className="mr-2 underline transition-colors duration-300 underline-offset-4 hover:text-zinc-900"
+              className="mr-2 underline transition-all-in-one underline-offset-4 hover:text-zinc-800"
             >
               {v.name}
             </Link>
@@ -81,14 +81,14 @@ const PostDetail: NextPage<
           {post.tags?.length ? (
             <>
               <span className="inline-block w-[1px] h-3 mx-4 bg-zinc-400"></span>
-              <FaTags className="mr-2 text-zinc-400" />
+              <FaTags className="mr-2 " />
             </>
           ) : null}
           {post.tags?.map((v) => (
             <Link
               href={`/tags/${post.id}`}
               key={v.id}
-              className="mr-2 underline transition-colors duration-300 underline-offset-4 hover:text-zinc-900"
+              className="mr-2 underline transition-all-in-one underline-offset-4 hover:text-zinc-800"
             >
               {v.name}
             </Link>
@@ -98,8 +98,8 @@ const PostDetail: NextPage<
         {/* 阅读数 */}
         <div className="flex items-center">
           <span className="inline-block w-[1px] h-3 mx-4 bg-zinc-400"></span>
-          <FaEye className="mr-2 text-zinc-400" />
-          <span className="mr-2 underline transition-colors duration-300 underline-offset-4 hover:text-zinc-900">
+          <FaEye className="mr-2 " />
+          <span className="mr-2 underline transition-all-in-one underline-offset-4 hover:text-zinc-800">
             {formatNumber(post.view)}
           </span>
         </div>

@@ -26,8 +26,8 @@ const Categories: NextPage<
   const total = data.data.total;
 
   return (
-    <div className="flex flex-col text-zinc-600">
-      <h2 className="mb-10 text-2xl font-semibold text-zinc-700">分类</h2>
+    <div className="flex flex-col">
+      <h2 className="mb-10 text-2xl font-semibold text-zinc-800">分类</h2>
       <div className="flex items-center justify-center mb-10">
         目前共计<span className="inline-block px-1">{total}</span>个分类
       </div>
@@ -36,11 +36,11 @@ const Categories: NextPage<
           <li key={v.id}>
             <Link
               href={`${CATEGORY_URL}/${v.id}`}
-              className="mr-2 underline transition-colors duration-300 underline-offset-4 hover:text-zinc-900"
+              className="mr-2 underline transition-all-in-one underline-offset-4 hover:text-zinc-800"
             >
               {v.name}
             </Link>
-            <span className="text-zinc-400">({v.posts})</span>
+            <span className="text-secondary">({v.posts})</span>
           </li>
         ))}
       </ul>

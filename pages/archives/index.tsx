@@ -59,7 +59,7 @@ const Archives: NextPage<
         ls.push(
           <li
             key={v.id}
-            className="relative transition-colors duration-300 py-6 pl-6 border-b after:absolute after:w-[6px] after:h-full after:left-0 after:top-0 after:bg-zinc-100 before:absolute before:w-1.5 before:h-1.5 before:rounded-full before:bg-zinc-400 before:-left-0 before:z-10 border-dashed border-zinc-200 before:top-1/2 before:-translate-y-1/2   hover:border-zinc-800 hover:before:bg-zinc-800"
+            className="relative transition-all-in-one hover:text-zinc-800 hover:font-medium py-6 pl-6 border-b after:absolute after:w-[6px] after:h-full after:left-0 after:top-0 after:bg-zinc-100 before:absolute before:w-1.5 before:h-1.5 before:rounded-full before:bg-zinc-400 before:-left-0 before:z-10 border-dashed border-zinc-200 before:top-1/2 before:-translate-y-1/2   hover:border-zinc-800 hover:before:bg-zinc-800"
           >
             <Link href={`${POST_URL}/${v.id}`}>
               <span className="mr-4">

@@ -33,16 +33,16 @@ const CategoryDetail: NextPage<
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-zinc-700 relative transition-colors duration-300 py-6 pl-4  after:absolute after:w-[6px] after:h-full after:left-0 after:top-0 after:bg-zinc-100 before:absolute before:w-1.5 before:h-1.5 before:rounded-full before:bg-zinc-400 before:-left-0 before:z-10  border-zinc-200 before:top-1/2 before:-translate-y-1/2">
-        {name} <span className="text-lg text-zinc-300">分类</span>
+      <h2 className="text-2xl font-semibold text-zinc-800 relative transition-all-in-one  py-6 pl-4  after:absolute after:w-[6px] after:h-full after:left-0 after:top-0 after:bg-zinc-100 before:absolute before:w-1.5 before:h-1.5 before:rounded-full before:bg-zinc-400 before:-left-0 before:z-10  border-zinc-200 before:top-1/2 before:-translate-y-1/2">
+        {name} <span className="text-lg text-secondary">分类</span>
       </h2>
 
-      <ul className="flex flex-col text-zinc-600">
+      <ul className="flex flex-col ">
         {posts.map((v) => {
           return (
             <li
               key={v.id}
-              className="relative transition-colors duration-300 py-6 pl-4 border-b after:absolute after:w-[6px] after:h-full after:left-0 after:top-0 after:bg-zinc-100 before:absolute before:w-1.5 before:h-1.5 before:rounded-full before:bg-zinc-400 before:-left-0 before:z-10 border-dashed border-zinc-200 before:top-1/2 before:-translate-y-1/2   hover:border-zinc-800 hover:before:bg-zinc-800"
+              className="relative transition-all-in-one hover:text-zinc-800 hover:font-medium  py-6 pl-4 border-b after:absolute after:w-[6px] after:h-full after:left-0 after:top-0 after:bg-zinc-100 before:absolute before:w-1.5 before:h-1.5 before:rounded-full before:bg-zinc-400 before:-left-0 before:z-10 border-dashed border-zinc-200 before:top-1/2 before:-translate-y-1/2   hover:border-zinc-800 hover:before:bg-zinc-800"
             >
               <Link href={`${POST_URL}/${v.id}`}>
                 <span className="mr-4">
