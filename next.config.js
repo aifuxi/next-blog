@@ -1,3 +1,5 @@
+const CLIENT_API_PATH = '/client_api';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // 关闭reactStrictMode
@@ -12,9 +14,9 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        // 这里只匹配/v1开头的请求，/v1开头的请求转发到process.env.BASE_URL/v1
-        source: `/v1/:path*`,
-        destination: `${process.env.BASE_URL}/v1/:path*`,
+        // 这里只匹配CLIENT_API_PATH开头的请求，CLIENT_API_PATH开头的请求转发到process.env.BASE_URL+CLIENT_API_PATH
+        source: `${CLIENT_API_PATH}/:path*`,
+        destination: `${process.env.BASE_URL}${CLIENT_API_PATH}/:path*`,
       },
     ];
   },
