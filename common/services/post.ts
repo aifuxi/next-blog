@@ -1,9 +1,9 @@
 import request from '@/utils/request';
-import { v1 } from '../constants/apiVersion';
+import { API_VERSION_V1 } from '../constants/apiVersion';
 import type { Post, FindManyPostReq, IListResponse, IResponse } from '../types';
 import qs from 'qs';
 
-export const POSTS = `${v1}/posts`;
+export const POSTS = `${API_VERSION_V1}/posts`;
 
 export function getPost(id: string): Promise<IResponse<Post>> {
   return request.get(`${POSTS}/${id}`);

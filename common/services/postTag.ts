@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-import { v1 } from '../constants/apiVersion';
+import { API_VERSION_V1 } from '../constants/apiVersion';
 import type {
   FindManyPostTagReq,
   IListResponse,
@@ -9,7 +9,7 @@ import type {
 } from '../types';
 import qs from 'qs';
 
-export const POST_TAGS = `${v1}/post_tags`;
+export const POST_TAGS = `${API_VERSION_V1}/post_tags`;
 
 export function findManyPostTag(
   data: FindManyPostTagReq

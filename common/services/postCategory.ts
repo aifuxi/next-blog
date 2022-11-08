@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-import { v1 } from '../constants/apiVersion';
+import { API_VERSION_V1 } from '../constants/apiVersion';
 import type {
   FindManyPostCategoryReq,
   IListResponse,
@@ -10,7 +10,7 @@ import type {
 
 import qs from 'qs';
 
-export const POST_CATEGORIES = `${v1}/post_categories`;
+export const POST_CATEGORIES = `${API_VERSION_V1}/post_categories`;
 
 export function findManyPostCategory(
   data: FindManyPostCategoryReq
