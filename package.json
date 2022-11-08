@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "start:prod": "pm2 start yarn --name \"next-blog\" --start",
     "lint": "next lint"
   },
   "dependencies": {
