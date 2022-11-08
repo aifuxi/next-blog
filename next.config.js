@@ -12,8 +12,9 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/:path*',
-        destination: `${process.env.BASE_URL}/:path*`,
+        // 这里只匹配/v1开头的请求，/v1开头的请求转发到process.env.BASE_URL/v1
+        source: `/v1/:path*`,
+        destination: `${process.env.BASE_URL}/v1/:path*`,
       },
     ];
   },
