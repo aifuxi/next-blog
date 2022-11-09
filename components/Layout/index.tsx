@@ -21,8 +21,8 @@ import {
 import cs from 'classnames';
 import { useRouter } from 'next/router';
 import { BLOG_AUTHOR, BLOG_TITLE } from '@/common/constants/blog';
-import { getStatisticsCount } from '@/common/services';
-import { StatisticsCount } from '@/common/types';
+import { getProfile, getStatisticsCount } from '@/common/services';
+import { Profile, StatisticsCount } from '@/common/types';
 
 type NavItem = {
   link: string;
@@ -66,6 +66,14 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
     postCount: 0,
     postTagCount: 0,
   });
+  const [profile, setProfile] = useState<Profile>({
+    email: '',
+    github: '',
+    author: '',
+    slogan: '',
+    site: '',
+    avatar: '',
+  });
 
   useEffect(() => {
     const fetchCountData = async () => {
@@ -73,7 +81,13 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
       setCountData(data);
     };
 
+    const fetchProfile = async () => {
+      const { data } = await getProfile();
+      setProfile(data);
+    };
+
     fetchCountData();
+    fetchProfile();
   }, []);
 
   return (
@@ -89,7 +103,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
           <div className="w-full mb-6 bg-white shadow-lg">
             <Link href={HOME_URL}>
               <h1 className="py-6 text-xl font-medium text-center text-white bg-zinc-800">
-                {BLOG_TITLE}
+                {profile.author ? `${profile.author}的博客` : BLOG_TITLE}
               </h1>
             </Link>
 
@@ -127,18 +141,16 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
           <div className="sticky flex flex-col items-center px-3 py-5 bg-white shadow-lg top-4">
             <div className="w-[120px] h-[120px] rounded-full border bg-white relative">
               <img
-                src={
-                  'https://remix-next-blog-1306920856.cos.ap-shanghai.myqcloud.com/avatar.jpg'
-                }
+                src={profile.avatar}
                 alt="logo"
                 className="block w-[108px] h-[108px]  rounded-full absolute left-1/2 top-1/2 -translate-x-1/2  -translate-y-1/2 border border-zinc-100 object-cover"
               />
             </div>
             <h2 className="py-4 text-2xl font-medium text-center">
-              {BLOG_AUTHOR}
+              {profile.author}
             </h2>
             <p className="mb-6 text-center text-size-small text-primary">
-              永远相信，美好的事情众将发生
+              {profile.slogan}
             </p>
             {/* TODO: 这个数字可以做一个滚动的效果，counter down */}
             <ul className="flex flex-row justify-center pb-4 border-b border-dashed">
@@ -163,18 +175,38 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
             </ul>
 
             <ul className="flex flex-row justify-center py-4">
-              <li className="flex flex-col items-center justify-center px-4">
-                <FaGithub />
-              </li>
-              <li className="flex flex-col items-center justify-center px-4">
-                <FaEnvelope />
-              </li>
-              <li className="flex flex-col items-center justify-center px-4">
-                <FaGlobeAsia />
-              </li>
-              <li className="flex flex-col items-center justify-center px-4">
-                <FaWeixin />
-              </li>
+              {profile.github && (
+                <li className="flex flex-col items-center justify-center px-4">
+                  <Link href={profile.github} target="_blank" rel="noreferrer">
+                    <FaGithub />
+                  </Link>
+                </li>
+              )}
+              {profile.email && (
+                <li className="flex flex-col items-center justify-center px-4">
+                  <Link
+                    href={`mailto:${profile.email}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <FaEnvelope />
+                  </Link>
+                </li>
+              )}
+              {profile.site && (
+                <li className="flex flex-col items-center justify-center px-4">
+                  <a href={profile.site} target="_blank" rel="noreferrer">
+                    <FaGlobeAsia />
+                  </a>
+                </li>
+              )}
+              {profile.wechat && (
+                <li className="flex flex-col items-center justify-center px-4">
+                  <Link href={profile.wechat} target="_blank" rel="noreferrer">
+                    <FaWeixin />
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </aside>

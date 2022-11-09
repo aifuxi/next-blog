@@ -22,11 +22,11 @@ export const getServerSideProps: GetServerSideProps<Props, any> = async () => {
 const About: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ data }) => {
-  const about = data.data;
+  const about = data.data || {}; // 默认给个{}，about数据为空导致500的情况
 
   return (
     <div className="flex flex-col">
-      <h2 className="text-2xl font-semibold">关于我</h2>
+      <h2 className="text-2xl font-semibold text-zinc-800">关于我</h2>
       <MarkdownEditor modelValue={about.content} previewOnly />
     </div>
   );

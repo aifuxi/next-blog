@@ -7,3 +7,5 @@ export * from './postCategory';
 export * from './statistics';
 
 export * from './about';
+
+export * from './profile';
