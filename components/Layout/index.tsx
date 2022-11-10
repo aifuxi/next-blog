@@ -17,6 +17,7 @@ import {
   FaTh,
   FaUserAlt,
   FaArchive,
+  FaBars,
 } from 'react-icons/fa';
 import cs from 'classnames';
 import { useRouter } from 'next/router';
@@ -74,6 +75,11 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
     site: '',
     avatar: '',
   });
+  const [menu, setMenu] = useState(false);
+
+  const handleToggleMenu = () => {
+    setMenu((v) => !v);
+  };
 
   useEffect(() => {
     const fetchCountData = async () => {
@@ -84,36 +90,58 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
     const fetchProfile = async () => {
       const { data } = await getProfile();
       setProfile(data);
+      window.document.title = data.author ? `${data.author}的博客` : BLOG_TITLE;
     };
 
     fetchCountData();
     fetchProfile();
   }, []);
 
+  useEffect(() => {
+    setMenu(false);
+  }, [pathname]);
+
   return (
-    <div className="w-full h-full min-h-screen bg-zinc-50">
-      <div className="w-[1120px] flex flex-row justify-between mx-auto">
+    <div className="w-full h-full min-h-screen pb-32 bg-zinc-50">
+      <div className="flex flex-col-reverse lg:justify-between lg:flex-row lg:mx-auto lg:w-[1120px]">
         {/* 网站主体部分 */}
-        <section className="w-[815px] bg-white shadow-lg p-10">
+        <section className="xl:w-[815px] min-h-screen bg-white  shadow-lg lg:p-10 lg:mr-6 pt-20 px-6">
           {children}
         </section>
 
         {/* 侧边栏 */}
-        <aside className="w-[260px]  flex flex-col ">
-          <div className="w-full mb-6 bg-white shadow-lg">
-            <Link href={HOME_URL}>
-              <h1 className="py-6 text-xl font-medium text-center text-white bg-zinc-800">
-                {profile.author ? `${profile.author}的博客` : BLOG_TITLE}
-              </h1>
-            </Link>
+        <aside className="lg:w-[260px] w-full  flex flex-col ">
+          <div className="w-full mb-6 bg-white shadow-lg ">
+            <div className="fixed top-0 left-0 right-0 z-20 flex items-center px-4 bg-zinc-800 lg:static">
+              <FaBars
+                className="mr-4 text-3xl text-white cursor-pointer lg:hidden"
+                onClick={handleToggleMenu}
+              />
+              <Link
+                href={HOME_URL}
+                className="flex-1 py-6 text-2xl font-medium text-center text-white "
+              >
+                <h1>
+                  {profile.author ? `${profile.author}的博客` : BLOG_TITLE}
+                </h1>
+              </Link>
+            </div>
 
-            <nav className="">
-              <ul className="flex flex-col py-4">
+            <nav>
+              <ul
+                className={cs(
+                  'lg:h-full fixed top-20 lg:static left-0 right-0 z-50 lg:flex lg:flex-col py-4 bg-white lg:shadow-none',
+                  {
+                    'shadow-xl': menu,
+                    hidden: !menu,
+                  }
+                )}
+              >
                 {navItems.map((v) => (
                   <li key={v.link}>
                     <Link
                       href={v.link}
-                      className="flex items-center justify-start h-10 px-4 bg-white text-size-small transition-all-in-one text-primary hover:bg-zinc-100"
+                      className="flex items-center justify-start h-10 px-4 bg-white transition-all-in-one text-size-small text-primary hover:bg-zinc-100"
                     >
                       {v.icon}
                       <span
@@ -138,7 +166,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
             </nav>
           </div>
 
-          <div className="sticky flex flex-col items-center px-3 py-5 bg-white shadow-lg top-4">
+          <div className="sticky flex-col items-center hidden px-3 py-5 bg-white shadow-lg top-4 lg:flex">
             <div className="w-[120px] h-[120px] rounded-full border bg-white relative">
               <img
                 src={profile.avatar}

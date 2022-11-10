@@ -1,4 +1,5 @@
 import { VIEW_INCREMENT_MILLISECOND } from '@/common/constants/numbers';
+import { CATEGORY_URL, TAG_URL } from '@/common/constants/path';
 import { getPost, postViewIncrement } from '@/common/services';
 import MarkdownEditor from '@/components/MarkdownEditor';
 import { formatNumber } from '@/utils/number';
@@ -48,60 +49,132 @@ const PostDetail: NextPage<
   }, [post]);
 
   return (
-    <div>
+    <div className="">
       <h1 className="pb-6 text-xl font-semibold text-zinc-800">{post.title}</h1>
-      <div className="flex flex-row items-center h-4 text-sm ">
-        {/* 发布时间/更新时间 */}
-        <div className="flex items-center justify-center space-x-1 ">
-          <FaCalendarAlt />
-          <span>{formatTime(post.createdAt)}</span>
+      <div className="flex flex-row items-center text-sm ">
+        {/* xs屏幕下，文章的一些属性 */}
+        <div className="flex flex-col flex-wrap md:hidden md:items-center md:flex-row md:h-6 sm:mb-2 text-size-small">
+          <div className="flex items-center">
+            {/* 是否原创 */}
+            <div className="flex items-center justify-center h-4 px-1 mr-2 text-xs text-white bg-zinc-500">
+              原创
+            </div>
+            {/* 发布时间/更新时间 */}
+            <div className="flex items-center h-full space-x-1 md:justify-center text-secondary text-size-small">
+              <FaCalendarAlt />
+              <span className="inline-flex items-center h-full">
+                {formatTime(post.createdAt)}
+              </span>
+            </div>
+            {/* 阅读数 */}
+            <div className="flex items-center text-secondary">
+              <span className=" w-[1px] h-3 mx-4 bg-zinc-400"></span>
+              <FaEye className="mr-2" />
+              <span className="mr-2 underline transition-colors duration-300 underline-offset-4 hover:text-zinc-800">
+                {formatNumber(post.view)}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center pt-2 text-xs">
+            {/* 分类 */}
+            <div className="flex items-center text-secondary">
+              {post.categories?.length ? (
+                <FaFolderOpen className="mr-2" />
+              ) : null}
+              {post.categories?.map((v) => (
+                <Link
+                  href={`${CATEGORY_URL}/${post.id}`}
+                  key={v.id}
+                  className="underline transition-colors duration-300 underline-offset-4 hover:text-zinc-800"
+                >
+                  {v.name}
+                </Link>
+              ))}
+            </div>
+
+            {/* 标签 */}
+            <div className="flex items-center flex-1 text-secondary">
+              {post.tags?.length ? (
+                <>
+                  <span className=" w-[1px] h-3 mx-4 bg-zinc-400"></span>
+                  <FaTags className="mr-2" />
+                </>
+              ) : null}
+              {post.tags?.map((v) => (
+                <Link
+                  href={`${TAG_URL}/${post.id}`}
+                  key={v.id}
+                  className="mr-2 underline transition-colors duration-300 underline-offset-4 hover:text-zinc-800"
+                >
+                  {v.name}
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* 分类 */}
-        <div className="flex items-center">
-          {post.categories?.length ? (
-            <>
-              <span className="inline-block w-[1px] h-3 mx-4 bg-zinc-400"></span>
-              <FaFolderOpen className="mr-2 " />
-            </>
-          ) : null}
-          {post.categories?.map((v) => (
-            <Link
-              href={`/categories/${post.id}`}
-              key={v.id}
-              className="mr-2 underline transition-all-in-one underline-offset-4 hover:text-zinc-800"
-            >
-              {v.name}
-            </Link>
-          ))}
-        </div>
+        {/* >= md屏幕下，文章的一些属性 */}
+        <div className="items-center hidden md:flex text-size-small">
+          {/* 是否原创 */}
+          <div className="flex items-center justify-center w-10 h-4 mr-2 text-xs text-white bg-zinc-500">
+            原创
+          </div>
 
-        {/* 标签 */}
-        <div className="flex items-center">
-          {post.tags?.length ? (
-            <>
-              <span className="inline-block w-[1px] h-3 mx-4 bg-zinc-400"></span>
-              <FaTags className="mr-2 " />
-            </>
-          ) : null}
-          {post.tags?.map((v) => (
-            <Link
-              href={`/tags/${post.id}`}
-              key={v.id}
-              className="mr-2 underline transition-all-in-one underline-offset-4 hover:text-zinc-800"
-            >
-              {v.name}
-            </Link>
-          ))}
-        </div>
+          {/* 发布时间/更新时间 */}
+          <div className="flex items-center justify-center h-full space-x-1 text-secondary text-size-small">
+            <FaCalendarAlt />
+            <span className="inline-flex items-center h-full">
+              {formatTime(post.createdAt)}
+            </span>
+          </div>
 
-        {/* 阅读数 */}
-        <div className="flex items-center">
-          <span className="inline-block w-[1px] h-3 mx-4 bg-zinc-400"></span>
-          <FaEye className="mr-2 " />
-          <span className="mr-2 underline transition-all-in-one underline-offset-4 hover:text-zinc-800">
-            {formatNumber(post.view)}
-          </span>
+          {/* 分类 */}
+          <div className="flex items-center text-secondary">
+            {post.categories?.length ? (
+              <>
+                <span className=" w-[1px] h-3 mx-4 bg-zinc-400"></span>
+                <FaFolderOpen className="mr-2 " />
+              </>
+            ) : null}
+            {post.categories?.map((v) => (
+              <Link
+                href={`${CATEGORY_URL}/${post.id}`}
+                key={v.id}
+                className="mr-2 underline transition-colors duration-300 underline-offset-4 hover:text-zinc-800"
+              >
+                {v.name}
+              </Link>
+            ))}
+          </div>
+
+          {/* 标签 */}
+          <div className="flex items-center text-secondary">
+            {post.tags?.length ? (
+              <>
+                <span className=" w-[1px] h-3 mx-4 bg-zinc-400 inline-block"></span>
+                <FaTags className="mr-2" />
+              </>
+            ) : null}
+            {post.tags?.map((v) => (
+              <Link
+                href={`${TAG_URL}/${post.id}`}
+                key={v.id}
+                className="mr-2 underline transition-colors duration-300 underline-offset-4 hover:text-zinc-800"
+              >
+                {v.name}
+              </Link>
+            ))}
+          </div>
+
+          {/* 阅读数 */}
+          <div className="flex items-center text-secondary">
+            <span className=" w-[1px] h-3 mx-4 bg-zinc-400 inline-block"></span>
+            <FaEye className="mr-2" />
+            <span className="mr-2 underline transition-colors duration-300 underline-offset-4 hover:text-zinc-800">
+              {formatNumber(post.view)}
+            </span>
+          </div>
         </div>
       </div>
       <MarkdownEditor modelValue={post.content} previewOnly />
