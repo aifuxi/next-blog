@@ -17,10 +17,6 @@ const Document: NextPage = () => {
         <meta name="application-name" content={BLOG_TITLE} />
         {/* 设置全局链接打开方式为_blank(在新标签页中打开) */}
         {/* <base target="_blank" /> */}
-        <meta
-          name="viewport"
-          content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0"
-        />
       </Head>
       <body className="selection:text-white selection:bg-zinc-700 text-primary">
         <Main />
