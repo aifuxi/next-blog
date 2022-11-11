@@ -3,6 +3,7 @@ import { CATEGORY_URL, TAG_URL } from '@/common/constants/path';
 import { getPost, postViewIncrement } from '@/common/services';
 import MarkdownEditor from '@/components/MarkdownEditor';
 import { formatNumber } from '@/utils/number';
+import { getViewedPostIds, setViewedPostId } from '@/utils/storage';
 import { formatTime } from '@/utils/time';
 import {
   GetServerSideProps,
@@ -38,13 +39,21 @@ const PostDetail: NextPage<
   const post = data.data;
 
   useEffect(() => {
-    // 在文章详情呆够 VIEW_INCREMENT_MILLISECOND 向后端发送阅读量+1请求
-    const timeId = window.setTimeout(async () => {
-      await postViewIncrement(post.id);
-    }, VIEW_INCREMENT_MILLISECOND);
+    let timeId: number;
+    const viewedIds = getViewedPostIds();
+    const isViewed = viewedIds?.includes(post.id);
+
+    if (!isViewed) {
+      // 没看过并且在文章详情呆够 VIEW_INCREMENT_MILLISECOND 向后端发送阅读量+1请求
+      // 防止浏览量一直++
+      timeId = window.setTimeout(async () => {
+        await postViewIncrement(post.id);
+        setViewedPostId(post.id);
+      }, VIEW_INCREMENT_MILLISECOND);
+    }
 
     return () => {
-      window.clearTimeout(timeId);
+      timeId && window.clearTimeout(timeId);
     };
   }, [post]);
 
