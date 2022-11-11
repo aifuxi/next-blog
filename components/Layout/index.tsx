@@ -62,6 +62,7 @@ const navItems: NavItem[] = [
 const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const router = useRouter();
   const { pathname } = router;
+  const thisYear = new Date().getFullYear();
   const [countData, setCountData] = useState<StatisticsCount>({
     postCategoryCount: 0,
     postCount: 0,
@@ -75,6 +76,8 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
     site: '',
     avatar: '',
   });
+  const blogTitle = profile.author ? `${profile.author}的博客` : BLOG_TITLE;
+  const author = profile.author ? profile.author : BLOG_AUTHOR;
   const [menu, setMenu] = useState(false);
 
   const handleToggleMenu = () => {
@@ -102,10 +105,10 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   }, [pathname]);
 
   return (
-    <div className="w-full h-full min-h-screen pb-32 bg-zinc-50">
-      <div className="flex flex-col-reverse lg:justify-between lg:flex-row lg:mx-auto lg:w-[1120px]">
+    <div className="w-full h-full min-h-screen bg-white lg:bg-zinc-50">
+      <main className="flex flex-col-reverse lg:justify-between lg:flex-row lg:mx-auto lg:w-[1120px]">
         {/* 网站主体部分 */}
-        <section className="xl:w-[815px] min-h-screen bg-white  shadow-lg lg:p-10 lg:mr-6 pt-20 px-6">
+        <section className="lg:w-[815px] min-h-screen bg-white  lg:shadow-lg lg:p-10 lg:mr-6 pt-20 px-6">
           {children}
         </section>
 
@@ -121,9 +124,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                 href={HOME_URL}
                 className="flex-1 py-6 text-2xl font-medium text-center text-white "
               >
-                <h1>
-                  {profile.author ? `${profile.author}的博客` : BLOG_TITLE}
-                </h1>
+                <h1>{blogTitle}</h1>
               </Link>
             </div>
 
@@ -238,7 +239,37 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
             </ul>
           </div>
         </aside>
-      </div>
+      </main>
+
+      <footer className="pt-16 pb-6 text-xs ">
+        <div className="flex justify-center space-x-1">
+          <div className="text-center text-secondary">
+            Build with
+            <a
+              href="https://nextjs.org/docs/getting-started"
+              target={'_blank'}
+              rel="noreferrer"
+              className="mx-1 underline underline-offset-2"
+            >
+              Nextjs
+            </a>
+            .
+          </div>
+          <div className="text-center text-secondary">
+            Theme inspired by
+            <a
+              href="https://github.com/iissnan/hexo-theme-next"
+              target={'_blank'}
+              rel="noreferrer"
+              className="mx-1 underline underline-offset-2"
+            >
+              NexT
+            </a>
+            .
+          </div>
+        </div>
+        <div className="text-center text-secondary">{`Copyright © ${thisYear} ${author} All rights reserved.`}</div>
+      </footer>
     </div>
   );
 };

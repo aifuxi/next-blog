@@ -49,9 +49,9 @@ const PostDetail: NextPage<
   }, [post]);
 
   return (
-    <div className="">
+    <div className="pb-20">
       <h1 className="pb-6 text-xl font-semibold text-zinc-800">{post.title}</h1>
-      <div className="flex flex-row items-center text-sm ">
+      <div className="flex flex-row items-center mb-4 text-sm">
         {/* xs屏幕下，文章的一些属性 */}
         <div className="flex flex-col flex-wrap md:hidden md:items-center md:flex-row md:h-6 sm:mb-2 text-size-small">
           <div className="flex items-center">
