@@ -24,6 +24,7 @@ import { useRouter } from 'next/router';
 import { BLOG_AUTHOR, BLOG_TITLE } from '@/common/constants/blog';
 import { getProfile, getStatisticsCount } from '@/common/services';
 import { Profile, StatisticsCount } from '@/common/types';
+import { NEXT_THEME_URL, NEXT_URL } from '@/common/constants/url';
 
 type NavItem = {
   link: string;
@@ -246,7 +247,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
           <div className="text-center text-secondary">
             Build with
             <a
-              href="https://nextjs.org/docs/getting-started"
+              href={NEXT_URL}
               target={'_blank'}
               rel="noreferrer"
               className="mx-1 underline underline-offset-2"
@@ -258,7 +259,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
           <div className="text-center text-secondary">
             Theme inspired by
             <a
-              href="https://github.com/iissnan/hexo-theme-next"
+              href={NEXT_THEME_URL}
               target={'_blank'}
               rel="noreferrer"
               className="mx-1 underline underline-offset-2"
