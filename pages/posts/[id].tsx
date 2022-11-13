@@ -187,6 +187,10 @@ const PostDetail: NextPage<
         </div>
       </div>
       <MarkdownEditor modelValue={post.content} previewOnly />
+
+      <div className="flex justify-center pt-10 text-xs text-secondary">
+        —— 本文最后更新于{formatTime(post.updatedAt)} ——
+      </div>
     </div>
   );
 };
