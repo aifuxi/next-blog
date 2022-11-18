@@ -1,6 +1,6 @@
 import type { PaginationReq } from './base';
+import { IS_DELETED_ENUM, SORT_BY_ENUM, SORT_ORDER_ENUM } from './enum';
 import { Post } from './post';
-import type { SortByEnum, SortOrderEnum } from './sort-enum';
 
 export interface CreatePostCategoryReq {
   name: string;
@@ -8,14 +8,14 @@ export interface CreatePostCategoryReq {
 }
 
 export type UpdatePostCategoryReq = Partial<
-  CreatePostCategoryReq & { isDeleted?: boolean }
+  CreatePostCategoryReq & { isDeleted?: IS_DELETED_ENUM }
 >;
 
 export interface PostCategory {
   id: string;
   name: string;
   description?: string;
-  isDeleted: boolean;
+  isDeleted: IS_DELETED_ENUM;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -31,7 +31,7 @@ export type PostCategoryWithPost = PostCategory & {
 export interface FindManyPostCategoryReq extends PaginationReq {
   id?: string;
   name?: string;
-  isDeleted?: boolean;
-  sortBy?: SortByEnum;
-  order?: SortOrderEnum;
+  isDeleted?: IS_DELETED_ENUM;
+  sortBy?: SORT_BY_ENUM;
+  order?: SORT_ORDER_ENUM;
 }

@@ -1,3 +1,4 @@
+import { postTypeMap } from '@/common/config/postTypeMap';
 import { VIEW_INCREMENT_MILLISECOND } from '@/common/constants/numbers';
 import { CATEGORY_URL, TAG_URL } from '@/common/constants/path';
 import { getPost, postViewIncrement } from '@/common/services';
@@ -74,7 +75,7 @@ const PostDetail: NextPage<
           <div className="flex items-center">
             {/* 是否原创 */}
             <div className="flex items-center justify-center h-4 px-1 mr-2 text-xs text-white bg-zinc-500">
-              原创
+              {post?.type ? postTypeMap[post.type] : '-'}
             </div>
             {/* 发布时间/更新时间 */}
             <div className="flex items-center h-full space-x-1 md:justify-center text-secondary text-size-small">
@@ -135,7 +136,7 @@ const PostDetail: NextPage<
         <div className="items-center hidden md:flex text-size-small">
           {/* 是否原创 */}
           <div className="flex items-center justify-center w-10 h-4 mr-2 text-xs text-white bg-zinc-500">
-            原创
+            {post?.type ? postTypeMap[post.type] : '-'}
           </div>
 
           {/* 发布时间/更新时间 */}
