@@ -6,7 +6,7 @@ export enum CodeEnum {
 export interface IResponse<T> {
   code: CodeEnum;
   message: string;
-  data: T;
+  data?: T;
 }
 
 export interface IListResponse<T> {

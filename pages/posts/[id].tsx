@@ -11,6 +11,7 @@ import {
   NextPage,
 } from 'next';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
 import React, { useEffect } from 'react';
 
@@ -37,29 +38,36 @@ const PostDetail: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ data }) => {
   const post = data.data;
+  const router = useRouter();
 
   useEffect(() => {
     let timeId: number;
-    const viewedIds = getViewedPostIds();
-    const isViewed = viewedIds?.includes(post.id);
+    if (post?.id) {
+      const viewedIds = getViewedPostIds();
+      const isViewed = viewedIds?.includes(post.id);
 
-    if (!isViewed) {
-      // 没看过并且在文章详情呆够 VIEW_INCREMENT_MILLISECOND 向后端发送阅读量+1请求
-      // 防止浏览量一直++
-      timeId = window.setTimeout(async () => {
-        await postViewIncrement(post.id);
-        setViewedPostId(post.id);
-      }, VIEW_INCREMENT_MILLISECOND);
+      if (!isViewed) {
+        // 没看过并且在文章详情呆够 VIEW_INCREMENT_MILLISECOND 向后端发送阅读量+1请求
+        // 防止浏览量一直++
+        timeId = window.setTimeout(async () => {
+          await postViewIncrement(post.id);
+          setViewedPostId(post.id);
+        }, VIEW_INCREMENT_MILLISECOND);
+      }
+    } else {
+      router.replace('/404');
     }
 
     return () => {
       timeId && window.clearTimeout(timeId);
     };
-  }, [post]);
+  }, [post, router]);
 
   return (
     <div className="pb-20">
-      <h1 className="pb-6 text-xl font-semibold text-zinc-800">{post.title}</h1>
+      <h1 className="pb-6 text-xl font-semibold text-zinc-800">
+        {post?.title}
+      </h1>
       <div className="flex flex-row items-center mb-4 text-sm">
         {/* xs屏幕下，文章的一些属性 */}
         <div className="flex flex-col flex-wrap md:hidden md:items-center md:flex-row md:h-6 sm:mb-2 text-size-small">
@@ -72,7 +80,7 @@ const PostDetail: NextPage<
             <div className="flex items-center h-full space-x-1 md:justify-center text-secondary text-size-small">
               <FaCalendarAlt />
               <span className="inline-flex items-center h-full">
-                {formatTime(post.createdAt)}
+                {formatTime(post?.createdAt)}
               </span>
             </div>
             {/* 阅读数 */}
@@ -80,7 +88,7 @@ const PostDetail: NextPage<
               <span className=" w-[1px] h-3 mx-4 bg-zinc-400"></span>
               <FaEye className="mr-2" />
               <span className="mr-2 underline transition-colors duration-300 underline-offset-4 hover:text-zinc-800">
-                {formatNumber(post.view)}
+                {formatNumber(post?.view)}
               </span>
             </div>
           </div>
@@ -88,10 +96,10 @@ const PostDetail: NextPage<
           <div className="flex items-center pt-2 text-xs">
             {/* 分类 */}
             <div className="flex items-center text-secondary">
-              {post.categories?.length ? (
+              {post?.categories?.length ? (
                 <FaFolderOpen className="mr-2" />
               ) : null}
-              {post.categories?.map((v) => (
+              {post?.categories?.map((v) => (
                 <Link
                   href={`${CATEGORY_URL}/${post.id}`}
                   key={v.id}
@@ -104,13 +112,13 @@ const PostDetail: NextPage<
 
             {/* 标签 */}
             <div className="flex items-center flex-1 text-secondary">
-              {post.tags?.length ? (
+              {post?.tags?.length ? (
                 <>
                   <span className=" w-[1px] h-3 mx-4 bg-zinc-400"></span>
                   <FaTags className="mr-2" />
                 </>
               ) : null}
-              {post.tags?.map((v) => (
+              {post?.tags?.map((v) => (
                 <Link
                   href={`${TAG_URL}/${post.id}`}
                   key={v.id}
@@ -134,21 +142,21 @@ const PostDetail: NextPage<
           <div className="flex items-center justify-center h-full space-x-1 text-secondary text-size-small">
             <FaCalendarAlt />
             <span className="inline-flex items-center h-full">
-              {formatTime(post.createdAt)}
+              {formatTime(post?.createdAt)}
             </span>
           </div>
 
           {/* 分类 */}
           <div className="flex items-center text-secondary">
-            {post.categories?.length ? (
+            {post?.categories?.length ? (
               <>
                 <span className=" w-[1px] h-3 mx-4 bg-zinc-400"></span>
                 <FaFolderOpen className="mr-2 " />
               </>
             ) : null}
-            {post.categories?.map((v) => (
+            {post?.categories?.map((v) => (
               <Link
-                href={`${CATEGORY_URL}/${post.id}`}
+                href={`${CATEGORY_URL}/${post?.id}`}
                 key={v.id}
                 className="mr-2 underline transition-colors duration-300 underline-offset-4 hover:text-zinc-800"
               >
@@ -159,15 +167,15 @@ const PostDetail: NextPage<
 
           {/* 标签 */}
           <div className="flex items-center text-secondary">
-            {post.tags?.length ? (
+            {post?.tags?.length ? (
               <>
                 <span className=" w-[1px] h-3 mx-4 bg-zinc-400 inline-block"></span>
                 <FaTags className="mr-2" />
               </>
             ) : null}
-            {post.tags?.map((v) => (
+            {post?.tags?.map((v) => (
               <Link
-                href={`${TAG_URL}/${post.id}`}
+                href={`${TAG_URL}/${post?.id}`}
                 key={v.id}
                 className="mr-2 underline transition-colors duration-300 underline-offset-4 hover:text-zinc-800"
               >
@@ -181,15 +189,15 @@ const PostDetail: NextPage<
             <span className=" w-[1px] h-3 mx-4 bg-zinc-400 inline-block"></span>
             <FaEye className="mr-2" />
             <span className="mr-2 underline transition-colors duration-300 underline-offset-4 hover:text-zinc-800">
-              {formatNumber(post.view)}
+              {formatNumber(post?.view)}
             </span>
           </div>
         </div>
       </div>
-      <MarkdownEditor modelValue={post.content} previewOnly />
+      <MarkdownEditor modelValue={post?.content || ''} previewOnly />
 
       <div className="flex justify-center pt-10 text-xs text-secondary">
-        —— <span className="mx-2">最后更新于{formatTime(post.updatedAt)}</span>
+        —— <span className="mx-2">最后更新于{formatTime(post?.updatedAt)}</span>
         ——
       </div>
     </div>

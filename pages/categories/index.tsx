@@ -15,7 +15,7 @@ type Props = {
 export const getServerSideProps: GetServerSideProps<Props, any> = async () => {
   const data = await findManyPostCategory({ limit: 1000, offset: 0 });
   return {
-    props: { data }, // will be passed to the page component as props
+    props: { data },
   };
 };
 

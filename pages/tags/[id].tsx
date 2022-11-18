@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async ({
 const PostTagDetail: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ data }) => {
-  const { name, posts } = data.data;
+  const { name, posts } = data.data || {};
 
   return (
     <div>
@@ -38,7 +38,7 @@ const PostTagDetail: NextPage<
       </h2>
 
       <ul className="flex flex-col text-primary">
-        {posts.map((v) => {
+        {posts?.map((v) => {
           return (
             <li
               key={v.id}
