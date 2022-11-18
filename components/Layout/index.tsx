@@ -24,7 +24,11 @@ import { useRouter } from 'next/router';
 import { BLOG_AUTHOR, BLOG_TITLE } from '@/common/constants/blog';
 import { getProfile, getStatisticsCount } from '@/common/services';
 import { Profile, StatisticsCount } from '@/common/types';
-import { NEXT_THEME_URL, NEXT_URL } from '@/common/constants/url';
+import {
+  NEXT_THEME_REFERENCE_URL,
+  NEXT_THEME_URL,
+  NEXT_URL,
+} from '@/common/constants/url';
 
 type NavItem = {
   link: string;
@@ -169,11 +173,11 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
           </div>
 
           <div className="sticky flex-col items-center hidden px-3 py-5 bg-white shadow-lg top-4 lg:flex">
-            <div className="w-[120px] h-[120px] rounded-full border bg-white relative">
+            <div className="w-[120px] h-[120px] border rounded-full overflow-hidden bg-white relative">
               <img
                 src={profile.avatar}
                 alt="logo"
-                className="block w-[108px] h-[108px]  rounded-full absolute left-1/2 top-1/2 -translate-x-1/2  -translate-y-1/2 border border-zinc-100 object-cover"
+                className="block w-[108px] h-[108px] absolute left-1/2 top-1/2 -translate-x-1/2  -translate-y-1/2 object-cover"
               />
             </div>
             <h2 className="py-4 text-2xl font-medium text-center">
@@ -245,7 +249,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
       <footer className="pt-16 pb-6 text-xs ">
         <div className="flex justify-center space-x-1">
           <div className="text-center text-secondary">
-            Build with
+            基于
             <a
               href={NEXT_URL}
               target={'_blank'}
@@ -254,10 +258,10 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
             >
               Nextjs
             </a>
-            .
+            构建
           </div>
           <div className="text-center text-secondary">
-            Theme inspired by
+            主题灵感来自
             <a
               href={NEXT_THEME_URL}
               target={'_blank'}
@@ -266,7 +270,15 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
             >
               NexT
             </a>
-            .
+            和
+            <a
+              href={NEXT_THEME_REFERENCE_URL}
+              target={'_blank'}
+              rel="noreferrer"
+              className="mx-1 underline underline-offset-2"
+            >
+              tianxiaohu
+            </a>
           </div>
         </div>
         <div className="text-center text-secondary">{`Copyright © ${thisYear} ${author} All rights reserved.`}</div>
