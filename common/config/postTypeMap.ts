@@ -1,4 +1,4 @@
-import { POST_TYPE_ENUM } from '../types/enum';
+import { POST_TYPE_ENUM } from '../types';
 
 export const postTypeMap = {
   [POST_TYPE_ENUM.ORIGINAL]: '原创',

@@ -1,7 +1,4 @@
-export enum CodeEnum {
-  SUCCESS,
-  FAIL,
-}
+import { CodeEnum } from './enum';
 
 export interface IResponse<T> {
   code: CodeEnum;

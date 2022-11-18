@@ -6,7 +6,7 @@ export * from './postCategory';
 
 export * from './postTag';
 
-export * from './sort-enum';
+export * from './enum';
 
 export * from './statistics';
 
