@@ -92,13 +92,21 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     const fetchCountData = async () => {
       const { data } = await getStatisticsCount();
-      setCountData(data);
+      setCountData(
+        data || {
+          postCount: 0,
+          postCategoryCount: 0,
+          postTagCount: 0,
+        }
+      );
     };
 
     const fetchProfile = async () => {
       const { data } = await getProfile();
-      setProfile(data);
-      window.document.title = data.author ? `${data.author}的博客` : BLOG_TITLE;
+      setProfile(data || {});
+      window.document.title = data?.author
+        ? `${data.author}的博客`
+        : BLOG_TITLE;
     };
 
     fetchCountData();
