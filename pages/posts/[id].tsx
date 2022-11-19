@@ -1,7 +1,8 @@
 import { postTypeMap } from '@/common/config/postTypeMap';
+import { BLOG_AUTHOR } from '@/common/constants/blog';
 import { VIEW_INCREMENT_MILLISECOND } from '@/common/constants/numbers';
 import { CATEGORY_URL, TAG_URL } from '@/common/constants/path';
-import { getPost, postViewIncrement } from '@/common/services';
+import { getPost, getProfile, postViewIncrement } from '@/common/services';
 import MarkdownEditor from '@/components/MarkdownEditor';
 import { formatNumber } from '@/utils/number';
 import { getViewedPostIds, setViewedPostId } from '@/utils/storage';
@@ -11,6 +12,7 @@ import {
   InferGetServerSidePropsType,
   NextPage,
 } from 'next';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
@@ -20,6 +22,7 @@ import { FaCalendarAlt, FaFolderOpen, FaTags, FaEye } from 'react-icons/fa';
 
 type Props = {
   data: Awaited<ReturnType<typeof getPost>>;
+  profile: Awaited<ReturnType<typeof getProfile>>;
 };
 
 type Params = ParsedUrlQuery & {
@@ -30,16 +33,18 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async ({
   params,
 }) => {
   const data = await getPost(params?.id || '');
+  const profile = await getProfile();
   return {
-    props: { data },
+    props: { data, profile },
   };
 };
 
 const PostDetail: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ data }) => {
+> = ({ data, profile }) => {
   const post = data.data;
   const router = useRouter();
+  const author = profile.data?.author || BLOG_AUTHOR;
 
   useEffect(() => {
     let timeId: number;
@@ -64,8 +69,22 @@ const PostDetail: NextPage<
     };
   }, [post, router]);
 
+  const getKeywords = () => {
+    const categories = post?.categories?.map((v) => v.name) || [];
+    const tags = post?.tags?.map((v) => v.name) || [];
+
+    return categories?.concat(tags).join(', ');
+  };
+
   return (
     <div className="pb-20">
+      {/* SEO */}
+      <Head>
+        <title>{`${author}的博客-${post?.title}`}</title>
+        <meta name="description" content={post?.description} />
+        <meta name="keywords" content={`${author}, ${getKeywords()}`} />
+      </Head>
+
       <h1 className="pb-6 text-xl font-semibold text-zinc-800">
         {post?.title}
       </h1>
