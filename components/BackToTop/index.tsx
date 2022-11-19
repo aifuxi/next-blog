@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FaArrowCircleUp } from 'react-icons/fa';
+import { FaArrowUp } from 'react-icons/fa';
 import cs from 'classnames';
 
 const BackToTop = () => {
@@ -29,13 +29,13 @@ const BackToTop = () => {
         }}
         title="回到顶部"
         className={cs(
-          'fixed flex flex-col items-center justify-center p-2 border rounded shadow-2xl cursor-pointer right-4 bottom-4 bg-slate-50',
+          'fixed z-20 flex flex-col items-center justify-center p-2  border rounded shadow-2xl cursor-pointer right-4 bottom-8 bg-zinc-100',
           {
             hidden: !visible,
           }
         )}
       >
-        <FaArrowCircleUp className="text-2xl" />
+        <FaArrowUp className="md:text-2xl" />
       </div>
     </>
   );
