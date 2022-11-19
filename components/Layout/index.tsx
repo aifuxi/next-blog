@@ -33,6 +33,7 @@ import {
 import Image from 'next/image';
 import BackToTop from '../BackToTop';
 import Catalog from '../Catalog';
+import gongan from '@/public/images/gongan.png';
 
 type NavItem = {
   link: string;
@@ -318,12 +319,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
         </div>
         <ul className="flex justify-center space-x-2 text-secondary">
           <li className="flex items-center justify-center space-x-2">
-            <Image
-              src="/images/gongan.png"
-              width={18}
-              height={18}
-              alt="gongan"
-            />
+            <Image src={gongan} width={18} height={18} alt="gongan" />
             <Link
               href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=36100202000364"
               target="_blank"
