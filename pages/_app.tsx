@@ -1,6 +1,7 @@
 import '../styles/globals.css';
 import '../styles/custom.css';
 import '../styles/reset-tap-highlight.css';
+import '../styles/markdown/index.scss';
 
 import type { AppProps } from 'next/app';
 import Layout from '@/components/Layout';

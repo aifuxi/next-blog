@@ -10,9 +10,12 @@ module.exports = {
       fontFamily: {
         mono: [
           'Liga mononoki',
-          'Monaco',
-          'Menlo',
+          'mononoki Nerd Font Mono',
           'Fira Code',
+          'JetBrains Mono',
+          'Menlo',
+          'Monaco',
+          'Consolas',
           'Courier New',
           'monospace',
         ],

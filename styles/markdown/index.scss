@@ -1,0 +1,324 @@
+// 基础样式来自 https://github.com/imzbf/markdown-theme/blob/develop/themes/default/index.scss
+// 在此基础上进行修修补补，修改成自己喜欢的样式，目前这里面有很多冗余的样式，也没有针对dark模式的样式，但是懒得改了，能用就行了
+
+$prefix: 'md-editor';
+$baseSize: 16px;
+$color: #222;
+$colorDark: #999;
+$colorReverse: #eee;
+$borderColor: #e6e6e6;
+$borderColorReverse: #bebebe;
+$bkColor: #fff;
+$codeBkColor: #282c34;
+$hover: #eee;
+// 在默认背景下凸出背景
+$bbkColor: #ececec;
+$primaryColor: #2d8cf0;
+$codeBkColor: #282c34;
+
+// default主题的样式
+.default-theme {
+  // 设置code代码下的样式
+  code {
+    // code代码下的滚动条
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-corner,
+    ::-webkit-scrollbar-track {
+      background-color: #e0e0e091;
+      border-radius: 2px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    ::-webkit-scrollbar-thumb {
+      border-radius: 2px;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    // 让code底部加点padding，让底部空间多一点
+    .code-block {
+      padding-bottom: 12px;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    position: relative;
+    word-break: break-all;
+    margin: 1.4em 0 0.8em 0;
+    font-weight: bold;
+    font-size: 20px;
+
+    a {
+      color: inherit;
+
+      &:hover {
+        color: #2d8cf0;
+      }
+    }
+  }
+
+  ol {
+    > li {
+      list-style: decimal;
+    }
+  }
+
+  ul {
+    > li {
+      list-style: disc;
+    }
+  }
+
+  ol,
+  ul {
+    .li-task {
+      list-style-type: none;
+
+      input {
+        margin-left: -1.5em;
+        margin-right: 0.1em;
+      }
+    }
+  }
+
+  a {
+    text-decoration: none;
+
+    color: #2d8cf0;
+    transition: color 0.3s;
+    // 防止链接中单词过长没能换行撑大容器
+    word-wrap: break-word;
+
+    &:hover {
+      color: $primaryColor;
+    }
+  }
+
+  pre,
+  code {
+    font-family: 'Liga mononoki', 'mononoki Nerd Font Mono', 'Fira Code',
+      'JetBrains Mono', Menlo, Monaco, Consolas, 'Courier New', monospace;
+    font-size: 14px;
+    color: rgb(36, 41, 47);
+  }
+
+  hr {
+    height: 1px;
+    margin: 10px 0;
+    border: none;
+    border-top: 1px solid #eaecef;
+  }
+
+  // 包裹的图片按照行显示
+  div[inline] {
+    & > .figure {
+      padding-right: 0.5em;
+
+      img {
+        padding: 0;
+        border: none;
+      }
+    }
+  }
+
+  .figure {
+    margin: 0 0 1em 0;
+    display: inline-flex;
+    flex-direction: column;
+    text-align: center;
+
+    .figcaption {
+      color: #888;
+      font-size: 0.875em;
+      margin-top: 5px;
+    }
+  }
+
+  img {
+    margin: 4px auto 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    border: 1px solid $borderColor;
+  }
+
+  p {
+    line-height: 1.6;
+    margin: 0;
+    padding: 0.5rem 0;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  code {
+    color: #3594f7;
+    background-color: rgba(59, 170, 250, 0.1);
+    display: inline-block;
+    padding: 0 4px;
+    border-radius: 2px;
+    line-height: 22px;
+    margin: 0 4px;
+  }
+
+  blockquote {
+    margin: 20px 0;
+    padding: 0.5em 1.2em;
+    line-height: 2em;
+    background-color: $bbkColor;
+    border-left: 5px solid #35b378;
+    display: block;
+
+    p {
+      padding: 0;
+    }
+  }
+
+  pre {
+    overflow: auto;
+    position: relative;
+    line-height: 1.7;
+    background-color: $codeBkColor;
+    box-shadow: 0 0 8px rgba(110, 110, 110, 0.45);
+    border-radius: 8px;
+    padding-top: 24px;
+    padding-bottom: 12px;
+
+    code {
+      position: relative;
+      padding: 1em;
+      color: #a9b7c6;
+      background-color: $codeBkColor;
+      display: block;
+      line-height: 1;
+      overflow: auto;
+
+      .code-block {
+        display: inline-block;
+        width: 100%;
+        overflow: auto;
+        vertical-align: bottom;
+      }
+
+      > * {
+        line-height: 2em;
+      }
+    }
+
+    .copy-button {
+      color: $colorDark;
+      position: absolute;
+      font-size: 12px;
+      top: 9px;
+      right: 10px;
+      cursor: pointer;
+    }
+
+    &::before {
+      position: absolute;
+      z-index: 1;
+      top: 12px;
+      left: 12px;
+      content: '';
+      display: block;
+      background-size: 40px;
+      border-radius: 50%;
+      background: #fc625d;
+      width: 12px;
+      height: 12px;
+      -webkit-box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+      box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+    }
+  }
+
+  table {
+    // width: 100%;
+    // table-layout: fixed;
+    overflow: auto;
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin-bottom: 1em;
+
+    tr {
+      th,
+      td {
+        word-wrap: break-word;
+        padding: 8px 14px;
+        border: 1px solid $borderColor;
+      }
+
+      &:nth-child(2n) {
+        background-color: #fafafa;
+      }
+
+      &:hover {
+        background-color: $hover;
+      }
+    }
+  }
+
+  ol,
+  ul {
+    margin: 0.6em 0;
+    padding-left: 1.6em;
+
+    li {
+      line-height: 1.6;
+      margin: 0.5em 0;
+    }
+  }
+}
+
+// 目录样式
+.md-editor-catalog > .md-editor-catalog-link {
+  padding: 5px 8px;
+}
+
+.md-editor-catalog-link {
+  padding: 5px 0 5px 1em;
+  line-height: 1.2;
+  font-size: 14px;
+}
+
+.md-editor-catalog-link span {
+  display: inline-block;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  color: var(--md-color);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: color 0.3s;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.md-editor-catalog-link span:hover {
+  color: $primaryColor;
+}
+
+.md-editor-catalog-wrapper > .md-editor-catalog-link {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.md-editor-catalog-wrapper > .md-editor-catalog-link:first-of-type {
+  padding-top: 10px;
+}
+
+.md-editor-catalog-wrapper > .md-editor-catalog-link:last-of-type {
+  padding-bottom: 0;
+}
+
+.md-editor-catalog-active > span {
+  color: $primaryColor;
+}

@@ -76,10 +76,6 @@ const PostDetail: NextPage<
     return categories?.concat(tags).join(', ');
   };
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
-
   return (
     <div className="pb-20">
       {/* SEO */}
