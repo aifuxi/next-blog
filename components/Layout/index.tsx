@@ -29,6 +29,7 @@ import {
   NEXT_THEME_URL,
   NEXT_URL,
 } from '@/common/constants/url';
+import Image from 'next/image';
 
 type NavItem = {
   link: string;
@@ -254,7 +255,8 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
         </aside>
       </main>
 
-      <footer className="pt-16 pb-6 text-xs ">
+      <footer className="flex flex-col pt-16 pb-4 space-y-1 text-xs">
+        <div className="text-center text-secondary">{`Copyright © ${thisYear} ${author} All rights reserved.`}</div>
         <div className="flex justify-center space-x-1">
           <div className="text-center text-secondary">
             基于
@@ -289,7 +291,27 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
             </a>
           </div>
         </div>
-        <div className="text-center text-secondary">{`Copyright © ${thisYear} ${author} All rights reserved.`}</div>
+        <ul className="flex justify-center space-x-2 text-secondary">
+          <li className="flex items-center justify-center space-x-2">
+            <Image src="/gongan.png" width={18} height={18} alt="gongan" />
+            <Link
+              href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=36100202000364"
+              target="_blank"
+              className="transition-all-in-one hover:text-zinc-800"
+            >
+              赣公网安备 36100202000364
+            </Link>
+          </li>
+          <li className="flex items-center justify-center">
+            <Link
+              href="https://beian.miit.gov.cn/"
+              target="_blank"
+              className="transition-all-in-one hover:text-zinc-800"
+            >
+              赣ICP备2022001411号
+            </Link>
+          </li>
+        </ul>
       </footer>
     </div>
   );
