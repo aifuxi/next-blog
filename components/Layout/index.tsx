@@ -3,6 +3,7 @@ import {
   ARCHIVES_URL,
   CATEGORY_URL,
   HOME_URL,
+  POST_URL,
   TAG_URL,
 } from '@/common/constants/path';
 import Link from 'next/link';
@@ -31,6 +32,7 @@ import {
 } from '@/common/constants/url';
 import Image from 'next/image';
 import BackToTop from '../BackToTop';
+import Catalog from '../Catalog';
 
 type NavItem = {
   link: string;
@@ -86,6 +88,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const blogTitle = profile.author ? `${profile.author}的博客` : BLOG_TITLE;
   const author = profile.author ? profile.author : BLOG_AUTHOR;
   const [menu, setMenu] = useState(false);
+  const [element, setElement] = useState<HTMLElement>();
 
   const handleToggleMenu = () => {
     setMenu((v) => !v);
@@ -117,6 +120,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     setMenu(false);
+    setElement(window.document.documentElement);
   }, [pathname]);
 
   return (
@@ -184,7 +188,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
             </nav>
           </div>
 
-          <div className="sticky flex-col items-center hidden px-3 py-5 bg-white shadow-lg top-4 lg:flex">
+          <div className="sticky flex-col items-center hidden px-3 py-5 mb-6 bg-white shadow-lg top-4 lg:flex">
             <div className="w-[120px] h-[120px] border rounded-full overflow-hidden bg-white relative">
               <img
                 src={profile.avatar}
@@ -200,23 +204,38 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
             </p>
             {/* TODO: 这个数字可以做一个滚动的效果，counter down */}
             <ul className="flex flex-row justify-center pb-4 border-b border-dashed">
-              <li className="flex flex-col items-center justify-center px-4">
-                <span className="text-base font-bold text-zinc-800">
-                  {countData.postCount}
-                </span>
-                <span className="text-size-small">文章</span>
+              <li>
+                <Link
+                  href={ARCHIVES_URL}
+                  className="flex flex-col items-center justify-center px-4"
+                >
+                  <span className="text-base font-bold text-zinc-800">
+                    {countData.postCount}
+                  </span>
+                  <span className="text-size-small">文章</span>
+                </Link>
               </li>
-              <li className="flex flex-col items-center justify-center px-4 border-l border-r">
-                <span className="text-base font-bold text-zinc-800">
-                  {countData.postCategoryCount}
-                </span>
-                <span className="text-size-small">分类</span>
+              <li>
+                <Link
+                  href={CATEGORY_URL}
+                  className="flex flex-col items-center justify-center px-4 border-l border-r"
+                >
+                  <span className="text-base font-bold text-zinc-800">
+                    {countData.postCategoryCount}
+                  </span>
+                  <span className="text-size-small">分类</span>
+                </Link>
               </li>
-              <li className="flex flex-col items-center justify-center px-4">
-                <span className="text-base font-bold text-zinc-800">
-                  {countData.postTagCount}
-                </span>
-                <span className="text-size-small">标签</span>
+              <li>
+                <Link
+                  href={TAG_URL}
+                  className="flex flex-col items-center justify-center px-4"
+                >
+                  <span className="text-base font-bold text-zinc-800">
+                    {countData.postTagCount}
+                  </span>
+                  <span className="text-size-small">标签</span>
+                </Link>
               </li>
             </ul>
 
@@ -255,6 +274,8 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
               )}
             </ul>
           </div>
+
+          <Catalog />
         </aside>
       </main>
 
