@@ -6,7 +6,18 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        mono: [
+          'Liga mononoki',
+          'Monaco',
+          'Menlo',
+          'Fira Code',
+          'Courier New',
+          'monospace',
+        ],
+      },
+    },
   },
   plugins: [],
 };

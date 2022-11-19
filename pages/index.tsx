@@ -178,7 +178,7 @@ const Index: NextPage<
           <div className="flex justify-end pb-6 border-b md:justify-start border-b-zinc-100 ">
             <Link
               href={`${POST_URL}/${post.id}`}
-              className="px-1.5 inline-flex justify-center  items-center space-x-1 py-1 border  text-size-small bg-white border-zinc-300 hover:text-white hover:border-zinc-800 hover:bg-zinc-800 transition-all-in-one"
+              className="px-1.5 inline-flex justify-center  items-center space-x-1 py-1 border  text-size-small bg-white border-zinc-300 lg:hover:text-white lg:hover:border-zinc-800 lg:hover:bg-zinc-800 transition-all-in-one"
             >
               <span className="text-xs md:text-size-small">阅读全文</span>
               <FaAngleDoubleRight className="text-xs md:text-size-small" />

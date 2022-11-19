@@ -30,6 +30,7 @@ import {
   NEXT_URL,
 } from '@/common/constants/url';
 import Image from 'next/image';
+import BackToTop from '../BackToTop';
 
 type NavItem = {
   link: string;
@@ -120,6 +121,8 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
 
   return (
     <div className="w-full h-full min-h-screen bg-white lg:bg-zinc-50">
+      <BackToTop />
+
       <main className="flex flex-col-reverse lg:justify-between lg:flex-row lg:mx-auto lg:w-[1120px]">
         {/* 网站主体部分 */}
         <section className="lg:w-[815px] min-h-screen bg-white  lg:shadow-lg lg:p-10 lg:mr-6 pt-20 px-6">
@@ -255,6 +258,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
         </aside>
       </main>
 
+      {/* footer */}
       <footer className="flex flex-col pt-16 pb-4 space-y-1 text-xs">
         <div className="text-center text-secondary">{`Copyright © ${thisYear} ${author} All rights reserved.`}</div>
         <div className="flex justify-center space-x-1">
